@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main  # deploy when code is pushed to the main branch
-    paths: # limited to the following paths
-      - 'assets/**'  
-      - '**/*.html'
-      - '**/*.js'
-      - '**/*.css'
+    # paths:
+    #   - 'assets/**'  
+    #   - '**/*.html'
+    #   - '**/*.js'
+    #   - '**/*.css'
 
 jobs:
   build:
@@ -24,7 +24,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: 'eu-west-3'  
+          region: 'eu-west-3'
+
+      # Debugging: Print out the AWS Bucket Name (Optional, for debugging purposes)
+      - name: Print Bucket Name
+        run: |
+          echo "Deploying to S3 Bucket: ${{ secrets.AWS_BUCKET_NAME }}"
 
       # Sync files with S3
       - name: Deploy to S3
@@ -34,4 +39,4 @@ jobs:
       # Optional: Invalidate CloudFront cache (if using CloudFront)
       - name: Invalidate CloudFront cache
         run: |
-          aws cloudfront create-invalidation --distribution-id YOUR_CLOUDFRONT_ID --paths "/*"
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRBUTION_ID }} --paths "/*"
