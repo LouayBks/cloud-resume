@@ -1,0 +1,37 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - main  # deploy when code is pushed to the main branch
+    paths: # limited to the following paths
+      - 'assets/**'  
+      - '**/*.html'
+      - '**/*.js'
+      - '**/*.css'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up AWS CLI
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: 'eu-west-3'  
+
+      # Sync files with S3
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./ s3://${{ secrets.AWS_BUCKET_NAME }} --exclude ".git/*" --delete
+
+      # Optional: Invalidate CloudFront cache (if using CloudFront)
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id YOUR_CLOUDFRONT_ID --paths "/*"
