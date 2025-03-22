@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # deploy when code is pushed to the main branch
+    # Remove paths if you want to trigger on any change
     # paths:
     #   - 'assets/**'  
     #   - '**/*.html'
@@ -24,7 +25,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: 'eu-west-3'
+          aws-region: 'eu-west-3'  # Corrected to aws-region
 
       # Debugging: Print out the AWS Bucket Name (Optional, for debugging purposes)
       - name: Print Bucket Name
