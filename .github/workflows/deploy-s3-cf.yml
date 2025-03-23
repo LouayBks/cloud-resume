@@ -5,11 +5,11 @@ on:
     branches:
       - main  # deploy when code is pushed to the main branch
     # Remove paths if you want to trigger on any change
-    # paths:
-    #   - 'assets/**'  
-    #   - '**/*.html'
-    #   - '**/*.js'
-    #   - '**/*.css'
+    paths:
+    - 'assets/**'  
+    - '**/*.html'
+    - '**/*.js'
+    - '**/*.css'
 
 jobs:
   build:
@@ -27,10 +27,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'eu-west-3'  # Corrected to aws-region
 
-      # Debugging: Print out the AWS Bucket Name (Optional, for debugging purposes)
+      # Debugging
       - name: Print Bucket Name
         run: |
-          echo "Deploying to S3 Bucket: ${{ secrets.AWS_BUCKET_NAME }}"
+          echo "Deploying to S3 Bucket"
 
       # Sync files with S3
       - name: Deploy to S3
