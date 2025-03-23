@@ -9,7 +9,7 @@
 
 /*===== Colores =====*/
 :root{
-    --first-color: #5361FF;
+    --first-color: #2bb2c0;
     --white-color: #FAFAFF;
     --dark-color: #2A3B47;
     --text-color: #697477;
@@ -450,14 +450,23 @@ img{
         align-items: center;
     }
 
-    .portfolio__container{
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
+    .portfolio__container {
+        display: grid;
+        grid-template-columns: 1fr 2fr ;/* 1 column for image, 1 for text, and a 0fr spacer */
+        grid-template-rows: repeat(4, auto); /* 4 rows, height adjusts to content */
         column-gap: 2rem;
+        row-gap: 3rem;
     }
+    .portfolio__description {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* centers the block inside its grid cell */
+        width: 100%;
+    }
+    
 
     .contact__container{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr; 
         justify-items: center;
     }
     .contact__form{
@@ -487,3 +496,4 @@ img{
         right: 24%;
     }
 }
+
