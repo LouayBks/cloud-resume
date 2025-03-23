@@ -1,7 +1,7 @@
 /aws/
 
 terraform/lambda/package/
-
+terraform/lambda/fucntion.zip
 terraform/.terraform/
 terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
